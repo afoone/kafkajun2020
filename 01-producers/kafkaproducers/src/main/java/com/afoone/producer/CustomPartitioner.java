@@ -16,7 +16,7 @@ public class CustomPartitioner  implements Partitioner {
         List<PartitionInfo> partitions = cluster.availablePartitionsForTopic(topic);
         int npartitions = partitions.size();
         if (keybytes.toString().startsWith("apple")) return 0;
-        return (Math.abs(Utils.murmur2(keybytes))%npartitions)+1;
+        return (Math.abs(Utils.murmur2(keybytes)) % npartitions)+1;
     }
 
     @Override
