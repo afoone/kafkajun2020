@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "c972801c-344d-4415-8281-d6db3c22b5e0",
+		"name": "kafka-connect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 check connect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://iprocuratio.com:8083/",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						""
+					]
+				},
+				"description": "connect check rest api"
+			},
+			"response": []
+		},
+		{
+			"name": "02 connector plugins",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connector-plugins/",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connector-plugins",
+						""
+					]
+				},
+				"description": "connect check rest api"
+			},
+			"response": []
+		},
+		{
+			"name": "03 start a file source",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"load-dnf-log\",\n    \"config\": {\n        \"connector.class\": \"FileStreamSource\",\n        \"file\": \"/var/log/dnf.log\",\n        \"topic\": \"kafka-log-topic\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				},
+				"description": "connect check rest api"
+			},
+			"response": []
+		},
+		{
+			"name": "04 get a connector",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"load-kafka-config\",\n    \"config\": {\n        \"connector.class\": \"FileStreamSource\",\n        \"file\": \"config/server.properties\",\n        \"topic\": \"kafka-config-topic\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/load-dnf-log",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"load-dnf-log"
+					]
+				},
+				"description": "connect check rest api"
+			},
+			"response": []
+		},
+		{
+			"name": "05 delete a connector",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"load-kafka-config\",\n    \"config\": {\n        \"connector.class\": \"FileStreamSource\",\n        \"file\": \"config/server.properties\",\n        \"topic\": \"kafka-config-topic\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/load-dnf-log",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"load-dnf-log"
+					]
+				},
+				"description": "connect check rest api"
+			},
+			"response": []
+		},
+		{
+			"name": "06 start a file sink",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"alfonso-sink-dnf-logs\",\n    \"config\": {\n        \"connector.class\": \"FileStreamSink\",\n        \"file\": \"/tmp/alfonso-sink.log\",\n        \"topics\": \"logs\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				},
+				"description": "connect check rest api"
+			},
+			"response": []
+		},
+		{
+			"name": "07 configure elastic sync connector",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"elastic\",\n    \"config\": {\n        \"connector.class\": \"ElasticsearchSinkConnector\",\n        \"connection.url\": \"http://iprocuratio.com:9200\",\n        \"type.name\": \"names-type\",\n        \"topics\": \"paraelastic\",\n        \"key.ignore\": true,\n        \"value.converter\": \"org.apache.kafka.connect.storage.StringConverter\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						""
+					]
+				},
+				"description": "básicamente pedimos a la REST API validar una configuración para un conector y le enviamos una configuración vacía\n\nComo respuesta nos debe dar la lista de configuraciones posibles."
+			},
+			"response": []
+		},
+		{
+			"name": "08 delete sync connector elastic",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"elastic-login-connector\",\n    \"config\": {\n        \"connector.class\": \"ElasticsearchSinkConnector\",\n        \"connection.url\": \"iprocuratio.com:9200\",\n        \"type.name\": \"logs\",\n        \"topics\": \"names\",\n        \"key.ignore\": true\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/elastic",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"elastic"
+					]
+				},
+				"description": "básicamente pedimos a la REST API validar una configuración para un conector y le enviamos una configuración vacía\n\nComo respuesta nos debe dar la lista de configuraciones posibles."
+			},
+			"response": []
+		},
+		{
+			"name": "09 show connectors",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						""
+					]
+				},
+				"description": "básicamente pedimos a la REST API validar una configuración para un conector y le enviamos una configuración vacía\n\nComo respuesta nos debe dar la lista de configuraciones posibles."
+			},
+			"response": []
+		},
+		{
+			"name": "10 show connectors elastic",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/elastic",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"elastic"
+					]
+				},
+				"description": "básicamente pedimos a la REST API validar una configuración para un conector y le enviamos una configuración vacía\n\nComo respuesta nos debe dar la lista de configuraciones posibles."
+			},
+			"response": []
+		},
+		{
+			"name": "11 show indices elastic",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/elastic",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"elastic"
+					]
+				},
+				"description": "básicamente pedimos a la REST API validar una configuración para un conector y le enviamos una configuración vacía\n\nComo respuesta nos debe dar la lista de configuraciones posibles."
+			},
+			"response": []
+		},
+		{
+			"name": "12 elastic - show indices",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://iprocuratio.com:8083/connectors/elastic",
+					"protocol": "http",
+					"host": [
+						"iprocuratio",
+						"com"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"elastic"
+					]
+				},
+				"description": "básicamente pedimos a la REST API validar una configuración para un conector y le enviamos una configuración vacía\n\nComo respuesta nos debe dar la lista de configuraciones posibles."
+			},
+			"response": []
+		}
+	]
+}
