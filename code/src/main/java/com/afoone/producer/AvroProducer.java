@@ -9,6 +9,8 @@ import io.confluent.kafka.serializers.KafkaAvroSerializer;
 
 import java.util.Properties;
 
+
+
 public class AvroProducer {
 
     public static void main(String[] args) throws InterruptedException{
@@ -21,7 +23,7 @@ public class AvroProducer {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         // serialiador de avro
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName() );
-        properties.put("schema.registry.url", "http://localhost:8081");
+        properties.put("schema.registry.url", "http://iprocuratio.com:8081");
 
 
         // Generaremos el productor

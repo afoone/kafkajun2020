@@ -15,7 +15,7 @@ public class Admin {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // Configuración
         Properties properties = new Properties();
-        properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "iprocuratio.com:9092");
+        properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 
 
         AdminClient adminClient = AdminClient.create(properties);
@@ -27,7 +27,7 @@ public class Admin {
         // Ver los topics
         Collection<TopicListing> topicListings = adminClient.listTopics().listings().get();
         for (TopicListing topic:topicListings) {
-//            System.out.println(topic.toString());
+            System.out.println(topic.toString());
         }
 
         // Crear topics
